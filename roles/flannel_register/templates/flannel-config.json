@@ -3,6 +3,10 @@
     "SubnetLen": {{ flannel_subnet_len }},
     "SubnetMin": "{{ flannel_min_network }}",
     "Backend": {
-        "Type": "host-gw"
+{% if flannel_type and openshift_cloudprovider_alicloud_access_key is defined and openshift_cloudprovider_alicloud_secret_key is defined %}
+        "Type": "{{ flannel_type | default('host-gw') }}",
+        "AccessKeyID": "{{ openshift_cloudprovider_alicloud_access_key }}",
+        "AccessKeySecret": "{{ openshift_cloudprovider_alicloud_secret_key }}"
+{% endif %}
      }
 }
